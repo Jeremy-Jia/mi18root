@@ -18,8 +18,8 @@ root-windows.cmd
 root-windows.cmd -ManagerOnly
 ```
 
-首次运行会自动下载便携 Python 和 Android platform-tools 到 `runtime\win\`。
-Windows 10/11 自带的 PowerShell 5.1 即可，不要求预装 Python 或 adb。
+仓库已包含 `runtime\win`（便携 Python + Android platform-tools）。
+Windows 10/11 自带的 PowerShell 5.1 即可，不要求预装 Python 或 adb，也不需要首次联网下载。
 
 ### macOS（Apple Silicon）
 
@@ -29,14 +29,14 @@ Windows 10/11 自带的 PowerShell 5.1 即可，不要求预装 Python 或 adb�
 ./root-macos.command -ManagerOnly
 ```
 
-首次运行会自动下载 PowerShell 7.6.7、便携 Python 3.12 和 Android platform-tools 到
-`runtime/mac/`。不需要 Homebrew Python、不需要系统 pwsh、不需要系统 adb。
+仓库已包含 `runtime/mac`（PowerShell 7.6.7、便携 Python 3.12、Android platform-tools）。
+不需要 Homebrew Python、不需要系统 pwsh、不需要系统 adb，也不需要首次联网下载。
 
 ### 离线使用
 
-如果不想首次联网下载，请使用 [v1.0.0 portable release](https://github.com/Jeremy-Jia/mi18root/releases/tag/v1.0.0)
-中的 `mi18root-portable-win-mac-20261021.zip`。解压后目录内已包含 `runtime/mac` 和 `runtime/win`，
-Windows/macOS 都可以直接运行，不再需要下载运行时。
+仓库本身就包含 `runtime/mac` 和 `runtime/win`，克隆后可直接离线运行。
+[v1.0.0 portable release](https://github.com/Jeremy-Jia/mi18root/releases/tag/v1.0.0)
+中的 `mi18root-portable-win-mac-20261021.zip` 只是相同内容的打包归档，便于不熟悉 Git 的用户直接解压。
 
 ## 常用参数
 
@@ -69,7 +69,7 @@ repo/bin/caplog.jar                     设备端日志工具
 repo/ksu/                               vmlinux、ksud、KernelSU 模块源
 repo/tools/                             模块补丁脚本
 out/bin/                                Android ARM64 漏洞/候选二进制
-runtime/                                下载的运行时（git 忽略；离线包内自带）
+runtime/                                随仓库提供的 Windows/macOS 运行时
 ```
 
 ## 已验证环境

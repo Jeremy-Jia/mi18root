@@ -1,0 +1,15 @@
+{
+  "PSModuleRestore": true,
+  "Output": "/Users/runner/work/1/a/ONEBRANCH_ARTIFACT/pwsh",
+  "Runtime": "osx-arm64",
+  "RootInfo": {
+    "Warning": "Please ensure your repo is at the root of the file system and named 'PowerShell' (example: '/PowerShell'), when building and packaging for release!",
+    "IsValid": false,
+    "RepoPath": "/Users/runner/work/1/s",
+    "ValidPath": "/PowerShell"
+  },
+  "Configuration": "Release",
+  "Framework": "net10.0",
+  "Top": "/Users/runner/work/1/s/src/powershell-unix",
+  "ForMinimalSize": false
+}

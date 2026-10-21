@@ -63,7 +63,7 @@ Windows 10/11 自带的 PowerShell 5.1 即可，不要求预装 Python 或 adb�
 
 ```text
 root-windows.cmd / root-macos.command   双平台入口
-bootstrap/                              首次运行下载运行时（离线包不需要）
+bootstrap/                              运行时被裁掉时的自动下载兜底
 tool/                                   PowerShell 主流程、设备脚本、Python 辅助
 repo/bin/caplog.jar                     设备端日志工具
 repo/ksu/                               vmlinux、ksud、KernelSU 模块源

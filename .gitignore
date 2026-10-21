@@ -1,0 +1,9 @@
+runtime/
+dist/
+downloads/
+out/run-*/
+out/blocked*/
+.DS_Store
+__pycache__/
+*.pyc
+*.log

@@ -307,7 +307,7 @@ function Stage-Slide {
     foreach ($c in 0..7) {
         AdbOk @('pull', "/data/local/tmp/bl_$c.bin", (Join-Path $dir "bl_$c.bin")) | Out-Null
     }
-    $bytes = (Get-ChildItem $dir -File | Measure-Object -Property Length -Sum).Sum
+    $bytes = ((Get-ChildItem $dir | Where-Object { -not $_.PSIsContainer }) | Measure-Object -Property Length -Sum).Sum
     Log ("  抓包 {0:N1} MB" -f ($bytes / 1MB)) DarkGray
     if ($bytes -lt 1MB) { Die "抓包太小（$bytes 字节），perfetto 可能没工作。检查 /data/local/tmp/bl_text.txt。" }
 
@@ -586,6 +586,16 @@ function Stage-Userspace {
 
 # ---------------------------------------------------------------- 主流程
 
+function Get-Sha256([string]$Path) {
+    # Some stripped-down Windows PowerShell builds do not expose Get-FileHash.
+    $sha = [System.Security.Cryptography.SHA256]::Create()
+    try {
+        $stream = [System.IO.File]::OpenRead($Path)
+        try { $hash = $sha.ComputeHash($stream) } finally { $stream.Dispose() }
+    } finally { $sha.Dispose() }
+    return ([System.BitConverter]::ToString($hash).Replace('-','')).ToLowerInvariant()
+}
+
 function Invoke-ManagerFix {
     Assert-NoReboot | Out-Null
     Log "== KernelSU 管理器：检查当前 appid，必要时触发正常重扫描 ==" Cyan
@@ -600,8 +610,8 @@ function Invoke-ManagerFix {
     $normalized = Join-Path $script:RunDir 'fix_ksu_manager.sh'
     [IO.File]::WriteAllText($normalized, ([IO.File]::ReadAllText($localScript) -replace "`r`n", "`n"), (New-Object Text.UTF8Encoding($false)))
     $probe = Join-Path $script:DevDir 'manager_probe'
-    $shHash = (Get-FileHash -LiteralPath $normalized -Algorithm SHA256).Hash.ToLowerInvariant()
-    $binHash = (Get-FileHash -LiteralPath $probe -Algorithm SHA256).Hash.ToLowerInvariant()
+    $shHash = Get-Sha256 $normalized
+    $binHash = Get-Sha256 $probe
     foreach ($item in @(@($normalized, "$remoteStage/fix_ksu_manager.sh"), @($probe, "$remoteStage/manager_probe"))) {
         $pushed = AdbOk @('push', $item[0], $item[1])
         if ($pushed.Code -ne 0) { Die "管理器工具推送失败：$($pushed.Text)" }

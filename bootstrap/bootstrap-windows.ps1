@@ -15,12 +15,21 @@ $PythonSha = '5e7d27ae6181fcf1f992c5a221b8fa7a320e7fd576c476434886292ccf2e20fb'
 $AdbUrl = 'https://dl.google.com/android/repository/platform-tools-latest-windows.zip'
 $AdbSha = '45f4d63113e895ebde0c90f194099a4676b6ac653bd28d54314a9e022bbc1a99'
 
+function Get-Sha256([string]$Path) {
+    $sha = [System.Security.Cryptography.SHA256]::Create()
+    try {
+        $stream = [System.IO.File]::OpenRead($Path)
+        try { $hash = $sha.ComputeHash($stream) } finally { $stream.Dispose() }
+    } finally { $sha.Dispose() }
+    return ([System.BitConverter]::ToString($hash).Replace('-','')).ToLowerInvariant()
+}
+
 function Get-Checked([string]$Url, [string]$Out, [string]$Expected) {
     if (-not (Test-Path -LiteralPath $Out)) {
         Write-Host "  downloading $(Split-Path -Leaf $Out)"
         Invoke-WebRequest -Uri $Url -OutFile $Out -UseBasicParsing
     }
-    $Actual = (Get-FileHash -LiteralPath $Out -Algorithm SHA256).Hash.ToLowerInvariant()
+    $Actual = Get-Sha256 $Out
     if ($Actual -ne $Expected.ToLowerInvariant()) {
         Remove-Item -LiteralPath $Out -Force
         throw "SHA-256 mismatch for $(Split-Path -Leaf $Out)"
@@ -45,7 +54,7 @@ if (-not (Test-Path -LiteralPath (Join-Path $Runtime 'platform-tools\adb.exe')))
     } else {
         Get-Checked $AdbUrl $AdbArchive $AdbSha
     }
-    $Actual = (Get-FileHash -LiteralPath $AdbArchive -Algorithm SHA256).Hash.ToLowerInvariant()
+    $Actual = Get-Sha256 $AdbArchive
     if ($Actual -ne $AdbSha.ToLowerInvariant()) { throw 'SHA-256 mismatch for platform-tools' }
     Expand-Archive -LiteralPath $AdbArchive -DestinationPath $Runtime -Force
 }

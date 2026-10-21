@@ -34,8 +34,8 @@ Windows 10/11 自带的 PowerShell 5.1 即可，不要求预装 Python 或 adb�
 
 ### 离线使用
 
-如果不想首次联网下载，请使用 GitHub Releases 中的
-`mi18root-portable-win-mac.zip`。解压后目录内已包含 `runtime/mac` 和 `runtime/win`，
+如果不想首次联网下载，请使用 [v1.0.0 portable release](https://github.com/Jeremy-Jia/mi18root/releases/tag/v1.0.0)
+中的 `mi18root-portable-win-mac-20261021.zip`。解压后目录内已包含 `runtime/mac` 和 `runtime/win`，
 Windows/macOS 都可以直接运行，不再需要下载运行时。
 
 ## 常用参数

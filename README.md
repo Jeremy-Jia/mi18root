@@ -35,8 +35,8 @@ Windows 10/11 自带的 PowerShell 5.1 即可，不要求预装 Python 或 adb�
 ### 离线使用
 
 仓库本身就包含 `runtime/mac` 和 `runtime/win`，克隆后可直接离线运行。
-[v1.0.0 portable release](https://github.com/Jeremy-Jia/mi18root/releases/tag/v1.0.0)
-中的 `mi18root-portable-win-mac-20261021.zip` 只是相同内容的打包归档，便于不熟悉 Git 的用户直接解压。
+[v1.0.1 portable release](https://github.com/Jeremy-Jia/mi18root/releases/tag/v1.0.1)
+中的 `mi18root-portable-win-mac-20261021-v1.0.1.zip` 只是相同内容的打包归档，便于不熟悉 Git 的用户直接解压。
 
 ## 常用参数
 
